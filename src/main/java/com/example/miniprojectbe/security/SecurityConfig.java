@@ -1,7 +1,6 @@
 package com.example.miniprojectbe.security;
 
 import com.example.miniprojectbe.jwt.JwtFilter;
-import com.example.miniprojectbe.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-    private final JwtProvider jwtProvider;
+    private final JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_URLS = { // 이 URL은 권한검사 하지 않음
             "/signup", "/login", "/", "/logout", "/findPw", "/findPw/sendMail",
-            "/depositList", "/savingsList","/mortgageLoan","/charterLoan"
+            "/depositList", "/savingsList","/mortgageLoan", "/charterLoan"
     };
 
     @Bean
@@ -48,7 +47,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt token 인증 방식으로 세션 필요없음 생성안함
                 .and()
                 .addFilterBefore(
-                        JwtFilter.of(jwtProvider),
+                        jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
                 ).build(); //인증 처리 기본필터 외에 별도의 인증로직 가진 필터를 생성하고 사용하고 싶을 때
     }

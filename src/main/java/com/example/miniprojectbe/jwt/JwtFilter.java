@@ -19,24 +19,18 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-@Builder
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
     private final BlacklistRepository blacklistRepository;
 
-    public static JwtFilter of(JwtProvider jwtProvider) {
-        return JwtFilter.builder()
-                .jwtProvider(jwtProvider)
-                .build();
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        System.out.println(header);
 
         try {
             if (!blacklistRepository.existsByToken(header)) {
@@ -46,6 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("토큰이 존재하지 않습니다.(3)");
             filterChain.doFilter(request, response);
         }
