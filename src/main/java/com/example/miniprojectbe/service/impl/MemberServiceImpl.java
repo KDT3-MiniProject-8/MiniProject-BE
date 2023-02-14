@@ -1,6 +1,6 @@
 package com.example.miniprojectbe.service.impl;
 
-import com.example.miniprojectbe.dto.MailDTO;
+
 import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.dto.MemberRequestDTO;
 import com.example.miniprojectbe.entity.Blacklist;
@@ -11,17 +11,14 @@ import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,16 +31,20 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public String memberSignup(MemberRequestDTO memberRequestDTO) {
+    public  HashMap<String, String> memberSignup(MemberRequestDTO memberRequestDTO) {
+        HashMap<String, String> result = new HashMap<>();
+
         try {
             String encodedPassword = passwordEncoder.encode(memberRequestDTO.getPassword());
             memberRequestDTO.setPassword(encodedPassword);
             memberRepository.save(memberRequestDTO.toEntity());
         } catch (Exception e) {
             e.printStackTrace();
-            return "failed";
+            result.put("resultCode", "failed");
+            return result;
         }
-        return "success";
+        result.put("resultCode", "success");
+        return result;
     }
 
     @Override
