@@ -1,5 +1,6 @@
 package com.example.miniprojectbe.service.impl;
 
+import com.example.miniprojectbe.dto.MailDTO;
 import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.dto.MemberRequestDTO;
 import com.example.miniprojectbe.entity.Blacklist;
@@ -9,8 +10,13 @@ import com.example.miniprojectbe.repository.BlacklistRepository;
 import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,6 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final JwtProvider jwtProvider;
@@ -76,6 +83,17 @@ public class MemberServiceImpl implements MemberService {
     public boolean checkEmailDuplicate(String memberId) {
         return memberRepository.existsByMemberId(memberId);
     }
+
+    @Override
+    public String findPassword(String memberId, String name) {
+        try {
+            memberRepository.findByMemberIdAndName(memberId, name).get();
+            return "success";
+        } catch (NoSuchElementException e) {
+            return "failed";
+        }
+    }
+
 
     private boolean isValidPassword(MemberLoginDTO memberLoginDTO, Member findMember) {
         return passwordEncoder.matches(memberLoginDTO.getPassword(), findMember.getPassword());
