@@ -9,6 +9,7 @@ import com.example.miniprojectbe.repository.BlacklistRepository;
 import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,10 +24,13 @@ public class MemberServiceImpl implements MemberService {
     private final JwtProvider jwtProvider;
     private final MemberRepository memberRepository;
     private final BlacklistRepository blacklistRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public String memberSignup(MemberRequestDTO memberRequestDTO) {
         try {
+            String encodedPassword = passwordEncoder.encode(memberRequestDTO.getPassword());
+            memberRequestDTO.setPassword(encodedPassword);
             memberRepository.save(memberRequestDTO.toEntity());
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,8 +77,8 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.existsByMemberId(memberId);
     }
 
-    private boolean isValidPassword(MemberLoginDTO memberLoginDTO, Member member) {
-        return memberLoginDTO.getPassword().equals(member.getPassword());
+    private boolean isValidPassword(MemberLoginDTO memberLoginDTO, Member findMember) {
+        return passwordEncoder.matches(memberLoginDTO.getPassword(), findMember.getPassword());
     }
 
 }
