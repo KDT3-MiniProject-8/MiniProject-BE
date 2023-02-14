@@ -1,9 +1,6 @@
 package com.example.miniprojectbe.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,7 +35,7 @@ public abstract class Item {
     private String join;
 
     @Column(name = "limit")
-    private int limit;
+    private Integer limit;
 
     @Column(name = "preference")
     private String preference;
@@ -48,4 +45,5 @@ public abstract class Item {
 
     @OneToMany(mappedBy = "item")
     private List<Basket> basketList;
+
 }

@@ -22,7 +22,7 @@ public class MemberController {
     private final CreateMailAndUpdatePwServiceImpl createMailAndUpdatePwServiceImpl;
 
     @PostMapping("/signup")
-    public String signup(MemberRequestDTO memberRequestDTO){
+    public HashMap<String, String> signup(MemberRequestDTO memberRequestDTO){
         return memberService.memberSignup(memberRequestDTO);
     }
 
