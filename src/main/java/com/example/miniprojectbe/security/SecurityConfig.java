@@ -24,7 +24,7 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS = { // 이 URL은 권한검사 하지 않음
             "/signup", "/login", "/", "/logout", "/findPw", "/findPw/sendMail",
-            "/depositList", "/savingsList","/mortgageLoan"
+            "/depositList", "/savingsList","/mortgageLoan", "/charterLoan"
     };
 
     @Bean
