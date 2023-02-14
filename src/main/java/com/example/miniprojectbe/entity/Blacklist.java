@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Blacklist {
 
     @Id
-    @Column(name="token")
+    @Column(name="token", nullable = false)
     private String token;
 
     @Column(name="create_date")
