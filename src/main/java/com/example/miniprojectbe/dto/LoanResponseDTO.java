@@ -20,8 +20,8 @@ public class LoanResponseDTO {
     private String limit;
     private String preference;
     private String target;
-    private String rate;
-    private String prefRate;
+    private String minRate;
+    private String maxRate;
     private String delay;
 
     public LoanResponseDTO(Loan loan) {
@@ -33,8 +33,8 @@ public class LoanResponseDTO {
         this.limit = String.valueOf(loan.getLimit());
         this.preference = loan.getPreference();
         this.target = loan.getTarget();
-        this.rate = String.valueOf(loan.getRate());
-        this.prefRate = String.valueOf(loan.getPrefRate());
+        this.minRate = String.valueOf(loan.getMinRate());
+        this.maxRate = String.valueOf(loan.getMaxRate());
         this.delay = loan.getDelay();
     }
 }

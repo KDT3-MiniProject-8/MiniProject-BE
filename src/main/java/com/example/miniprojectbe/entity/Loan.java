@@ -19,20 +19,20 @@ import java.util.List;
 public class Loan extends Item{
 
     @Column(name = "minRate")
-    private BigDecimal rate;
+    private BigDecimal minRate;
 
     @Column(name = "maxRate")
-    private BigDecimal prefRate;
+    private BigDecimal maxRate;
 
     @Column(name = "delay")
     private String delay;
 
     @Builder
     public Loan(Long itemId, String category, String bank, String itemName, String type, String join, int limit, String preference, String target, List<Basket> basketList,
-                   BigDecimal rate, BigDecimal prefRate, String mature) {
+                   BigDecimal minRate, BigDecimal maxRate, String mature) {
         super(itemId, category, bank, itemName,type,join,limit,preference,target,basketList); // 부모 클래스 생성자 호출
-        this.rate = rate; // 추가된 필드
-        this.prefRate = prefRate; // 추가된 필드
+        this.minRate = minRate; // 추가된 필드
+        this.maxRate = maxRate; // 추가된 필드
         this.delay = mature; // 추가된 필드
     }
 }
