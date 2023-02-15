@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 public class DepositProductDTO {
 
-    private String itemId;
     private String bank;
     private String itemName;
     private String type;
@@ -20,7 +19,6 @@ public class DepositProductDTO {
     private String prefRate;
 
     public DepositProductDTO(Deposit deposit){
-        this.itemId=String.valueOf(deposit.getItemId());
         this.bank=deposit.getBank();
         this.itemName=deposit.getItemName();
         this.type=deposit.getType();
