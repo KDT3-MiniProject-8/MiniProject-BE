@@ -10,5 +10,5 @@ import java.util.List;
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
 
     Slice<Deposit> findAllByCategory(String category, PageRequest pageRequest);
-    List<Deposit> findByBankAndCategory(String bank, String category);
+    List<Deposit> findTop3ByBankAndCategoryOrderByRateAsc(String bank, String category);
 }

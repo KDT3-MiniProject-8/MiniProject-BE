@@ -10,5 +10,5 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     Slice<Loan> findAllByCategory(String category, PageRequest pageRequest);
-    List<Loan> findByBankAndCategory(String bank, String category);
+    List<Loan> findTop3ByBankAndCategoryOrderByMinRateAsc(String bank, String category);
 }
