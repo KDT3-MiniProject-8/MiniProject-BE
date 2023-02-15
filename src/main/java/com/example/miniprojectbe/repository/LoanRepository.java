@@ -11,4 +11,5 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     Slice<Loan> findAllByCategory(String category, PageRequest pageRequest);
     List<Loan> findTop3ByBankAndCategoryOrderByMinRateAsc(String bank, String category);
+    List<Loan> findAllByBankContainingOrItemNameContaining(String content1, String content2);
 }
