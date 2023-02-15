@@ -12,6 +12,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class BasketId implements Serializable {
 
-    private Long member;
+    private String member;
     private Long item;
 }
