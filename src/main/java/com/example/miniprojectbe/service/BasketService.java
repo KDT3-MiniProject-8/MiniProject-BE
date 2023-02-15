@@ -6,4 +6,6 @@ public interface BasketService {
 
     HashMap<String, String> addCart(String header, Long itemId);
     HashMap<String, Object> getCartList(String header);
+    HashMap<String, String> deleteCartByBasketId(Long basketId);
+    HashMap<String, String> deleteAllCartsByHeader(String header);
 }

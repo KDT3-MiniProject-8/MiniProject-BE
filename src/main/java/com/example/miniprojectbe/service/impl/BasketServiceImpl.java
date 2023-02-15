@@ -11,6 +11,7 @@ import com.example.miniprojectbe.service.ItemService;
 import com.example.miniprojectbe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +65,32 @@ public class BasketServiceImpl implements BasketService {
             return result;
         }
         return result;
+    }
+
+    @Override
+    public HashMap<String, String> deleteCartByBasketId(Long basketId) {
+        try {
+            Basket basket =  basketRepository.findByBasket(basketId).get();
+            basketRepository.delete(basket);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return returnFailed();
+        }
+        return returnSuccess();
+    }
+
+    @Transactional
+    @Override
+    public HashMap<String, String> deleteAllCartsByHeader(String header) {
+        try {
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            basketRepository.deleteByMemberId(memberId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return returnFailed();
+        }
+        return returnSuccess();
     }
 
     private HashMap<String, String> returnFailed() {
