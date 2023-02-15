@@ -1,10 +1,10 @@
 package com.example.miniprojectbe.repository;
 
 import com.example.miniprojectbe.entity.Loan;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface LoanRepository extends JpaRepository<Loan, Long> {
-    List<Loan> findAllByCategory(String category);
+    Slice<Loan> findAllByCategory(String category, PageRequest pageRequest);
 }
