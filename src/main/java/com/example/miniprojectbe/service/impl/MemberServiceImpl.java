@@ -1,8 +1,7 @@
 package com.example.miniprojectbe.service.impl;
 
 
-import com.example.miniprojectbe.dto.MemberLoginDTO;
-import com.example.miniprojectbe.dto.MemberRequestDTO;
+import com.example.miniprojectbe.dto.*;
 import com.example.miniprojectbe.entity.Blacklist;
 import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.jwt.JwtProvider;
@@ -13,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
@@ -104,6 +104,50 @@ public class MemberServiceImpl implements MemberService {
             log.error("해당 memberId와 일치하는 회원이 없습니다.");
             return null;
         }
+    }
+
+    @Transactional
+    @Override
+    public HashMap<String, String> updateMemberInfo(String header, MemberUpdateRequestDTO memberUpdateRequestDTO) {
+
+        HashMap<String, String> result = new HashMap<>();
+
+        try {
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            Member member = findMemberByMemberId(memberId);
+
+            memberUpdateRequestDTO.setPassword(passwordEncoder.encode(memberUpdateRequestDTO.getPassword()));
+            member.updateMember(memberUpdateRequestDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("resultCode", "failed");
+            return result;
+        }
+        result.put("resultCode", "success");
+        return result;
+    }
+
+    @Override
+    public HashMap<String, Object> getMemberInfo(String header) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        try {
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            Member member = findMemberByMemberId(memberId);
+            if (member!=null) {
+                MemberInfoResponseDTO findMember = new MemberInfoResponseDTO(member);
+                result.put("resultCode", "success");
+                result.put("resultData", findMember);
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("resultCode", "failed");
+            return result;
+        }
+        result.put("resultCode", "failed");
+        return result;
     }
 
     private boolean isValidPassword(MemberLoginDTO memberLoginDTO, Member findMember) {

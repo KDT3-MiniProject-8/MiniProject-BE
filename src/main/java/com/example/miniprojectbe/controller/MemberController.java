@@ -3,6 +3,7 @@ package com.example.miniprojectbe.controller;
 import com.example.miniprojectbe.dto.MailDTO;
 import com.example.miniprojectbe.dto.MemberRequestDTO;
 import com.example.miniprojectbe.dto.MemberLoginDTO;
+import com.example.miniprojectbe.dto.MemberUpdateRequestDTO;
 import com.example.miniprojectbe.service.MemberService;
 import com.example.miniprojectbe.service.impl.CreateMailAndUpdatePwServiceImpl;
 import com.example.miniprojectbe.service.impl.SendMailServiceImpl;
@@ -66,5 +67,15 @@ public class MemberController {
         }
 
         return result;
+    }
+
+    @PatchMapping("/member/update")
+    public HashMap<String, String> updateMemberInfo(@RequestHeader(name = "Authorization") String header, MemberUpdateRequestDTO memberUpdateRequestDTO) {
+        return memberService.updateMemberInfo(header, memberUpdateRequestDTO);
+    }
+
+    @PostMapping("/member/info")
+    public HashMap<String, Object> getMemberInfo(@RequestHeader(name = "Authorization") String header) {
+        return memberService.getMemberInfo(header);
     }
 }
