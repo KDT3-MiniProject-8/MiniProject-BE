@@ -84,7 +84,7 @@ public class BasketServiceImpl implements BasketService {
     public HashMap<String, String> deleteAllCartsByHeader(String header) {
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            basketRepository.deleteAllByMember_MemberId(memberId);
+            basketRepository.deleteByMemberId(memberId);
 
         } catch (Exception e) {
             e.printStackTrace();

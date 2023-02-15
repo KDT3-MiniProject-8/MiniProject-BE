@@ -4,6 +4,9 @@ import com.example.miniprojectbe.dto.BasketId;
 import com.example.miniprojectbe.entity.Basket;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,5 +18,7 @@ public interface BasketRepository extends JpaRepository<Basket, BasketId> {
 
     Optional<Basket> findByBasket(Long basketId);
 
-    void deleteAllByMember_MemberId(String memberId);
+    @Modifying
+    @Query("delete from Basket basket where basket.member.memberId = :memberId")
+    void deleteByMemberId(@Param("memberId") String memberId);
 }
