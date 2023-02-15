@@ -23,8 +23,6 @@ public class MemberLoginDTO {
 
     public MemberLoginDTO(Claims claims) {
         this.memberId = claims.get("memberId", String.class);
-        this.bank = claims.get("bank", String.class);
-        this.category = claims.get("category", String.class);
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

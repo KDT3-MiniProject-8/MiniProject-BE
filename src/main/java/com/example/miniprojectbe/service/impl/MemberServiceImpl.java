@@ -96,9 +96,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findMemberByMemberId(String memberId) {
+    public MemberInfoResponseDTO findMemberInfoByMemberId(String memberId) {
         try {
-            Member findMember = memberRepository.findByMemberId(memberId).get();
+            MemberInfoResponseDTO findMember = memberRepository.findByMemberId(memberId).map(MemberInfoResponseDTO::new).get();
             return findMember;
         } catch (NoSuchElementException e) {
             log.error("해당 memberId와 일치하는 회원이 없습니다.");
@@ -114,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
 
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            Member member = findMemberByMemberId(memberId);
+            Member member = memberRepository.findByMemberId(memberId).get();
 
             memberUpdateRequestDTO.setPassword(passwordEncoder.encode(memberUpdateRequestDTO.getPassword()));
             member.updateMember(memberUpdateRequestDTO);
@@ -134,7 +134,8 @@ public class MemberServiceImpl implements MemberService {
 
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            Member member = findMemberByMemberId(memberId);
+            Member member = memberRepository.findByMemberId(memberId).get();
+
             if (member!=null) {
                 MemberInfoResponseDTO findMember = new MemberInfoResponseDTO(member);
                 result.put("resultCode", "success");
