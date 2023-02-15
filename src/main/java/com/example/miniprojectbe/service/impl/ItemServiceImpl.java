@@ -1,7 +1,6 @@
 package com.example.miniprojectbe.service.impl;
 
 import com.example.miniprojectbe.entity.Item;
-import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.repository.ItemRepository;
 import com.example.miniprojectbe.service.ItemService;
 import lombok.RequiredArgsConstructor;
