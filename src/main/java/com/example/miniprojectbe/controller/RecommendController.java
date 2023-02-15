@@ -1,5 +1,6 @@
 package com.example.miniprojectbe.controller;
 
+import com.example.miniprojectbe.dto.MemberInfoResponseDTO;
 import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.jwt.JwtProvider;
@@ -22,7 +23,7 @@ public class RecommendController {
     @GetMapping("/mainRecommend")
     public HashMap<String, Object> getRecommendList(@RequestHeader(name = "Authorization") String header) {
         MemberLoginDTO memberLoginDTO = jwtProvider.getMemberDTO(header);
-        Member findMember = memberService.findMemberByMemberId(memberLoginDTO.getMemberId());
+        MemberInfoResponseDTO findMember = memberService.findMemberInfoByMemberId(memberLoginDTO.getMemberId());
         String bank = findMember.getBank();
         String category = findMember.getCategory();
 
