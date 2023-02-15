@@ -20,7 +20,6 @@ public class RecommendDepositResponseDTO {
     private String type;
     private BigDecimal rate;
     private BigDecimal prefRate;
-    private String mature;
 
     public RecommendDepositResponseDTO(Deposit deposit) {
         this.itemId = deposit.getItemId();
@@ -30,7 +29,6 @@ public class RecommendDepositResponseDTO {
         this.type = deposit.getType();
         this.rate = deposit.getRate();
         this.prefRate = deposit.getPrefRate();
-        this.mature = deposit.getMature();
     }
 
 }
