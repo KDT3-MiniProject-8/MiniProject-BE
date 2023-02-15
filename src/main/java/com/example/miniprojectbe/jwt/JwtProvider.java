@@ -69,4 +69,9 @@ public class JwtProvider { //토큰 생성 및 검증 객체
     private String extractToken(String header) { //Bearer 떼어내는 메서드
         return header.substring(jwtProperties.getTokenPrefix().length());
     }
+
+    public String getMemberIdByHeader(String header) {
+        MemberLoginDTO memberLoginDTO = getMemberDTO(header);
+        return memberLoginDTO.getMemberId();
+    }
 }

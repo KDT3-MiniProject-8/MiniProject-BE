@@ -1,7 +1,6 @@
 package com.example.miniprojectbe.service.impl;
 
 import com.example.miniprojectbe.dto.BasketResponseDTO;
-import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.entity.Basket;
 import com.example.miniprojectbe.entity.Item;
 import com.example.miniprojectbe.entity.Member;
@@ -29,7 +28,7 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public HashMap<String, String> addCart(String header, Long itemId) {
         try {
-            String memberId = getMemberIdByHeader(header);
+            String memberId = jwtProvider.getMemberIdByHeader(header);
 
             Member member = memberService.findMemberByMemberId(memberId);
             Item item = itemService.findItemByItemId(itemId);
@@ -50,7 +49,7 @@ public class BasketServiceImpl implements BasketService {
         HashMap<String, Object> result = new HashMap<>();
 
         try {
-            String memberId = getMemberIdByHeader(header);
+            String memberId = jwtProvider.getMemberIdByHeader(header);
             List<BasketResponseDTO> basketResponseDTOS = basketRepository.findByMember_MemberId(memberId)
                     .stream()
                     .map(BasketResponseDTO::new)
@@ -65,11 +64,6 @@ public class BasketServiceImpl implements BasketService {
             return result;
         }
         return result;
-    }
-
-    private String getMemberIdByHeader(String header) {
-        MemberLoginDTO memberLoginDTO = jwtProvider.getMemberDTO(header);
-        return memberLoginDTO.getMemberId();
     }
 
     private HashMap<String, String> returnFailed() {
