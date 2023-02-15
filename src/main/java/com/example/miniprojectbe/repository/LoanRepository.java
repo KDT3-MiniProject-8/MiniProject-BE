@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findAllByCategory(String category);
+    List<Loan> findByBankAndCategory(String bank, String category);
 }

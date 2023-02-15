@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
     List<Deposit> findAllByCategory(String category);
+    List<Deposit> findByBankAndCategory(String bank, String category);
 }
