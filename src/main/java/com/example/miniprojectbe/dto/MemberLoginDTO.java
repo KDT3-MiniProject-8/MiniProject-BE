@@ -18,9 +18,13 @@ public class MemberLoginDTO {
 
     private String memberId;
     private String password;
+    private String bank;
+    private String category;
 
     public MemberLoginDTO(Claims claims) {
         this.memberId = claims.get("memberId", String.class);
+        this.bank = claims.get("bank", String.class);
+        this.category = claims.get("category", String.class);
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
