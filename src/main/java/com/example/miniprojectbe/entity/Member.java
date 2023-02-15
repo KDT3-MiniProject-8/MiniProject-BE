@@ -1,5 +1,6 @@
 package com.example.miniprojectbe.entity;
 
+import com.example.miniprojectbe.dto.MemberUpdateRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,4 +45,14 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Basket> basketList;
+
+    public void updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
+        password = memberUpdateRequestDTO.getPassword();
+        name = memberUpdateRequestDTO.getName();
+        birth = LocalDateTime.parse(memberUpdateRequestDTO.getBirth());
+        job = memberUpdateRequestDTO.getJob();
+        district = memberUpdateRequestDTO.getDistrict();
+        bank = memberUpdateRequestDTO.getBank();
+        category = memberUpdateRequestDTO.getCategory();
+    }
 }
