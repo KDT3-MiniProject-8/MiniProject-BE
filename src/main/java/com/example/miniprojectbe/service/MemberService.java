@@ -1,5 +1,6 @@
 package com.example.miniprojectbe.service;
 
+import com.example.miniprojectbe.dto.MemberInfoResponseDTO;
 import com.example.miniprojectbe.dto.MemberRequestDTO;
 import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.dto.MemberUpdateRequestDTO;
@@ -14,7 +15,7 @@ public interface MemberService {
     HashMap<String, String> saveHeaderTokenToBlackList(String header);
     boolean checkEmailDuplicate(String memberId);
     String findPassword(String memberId, String name);
-    Member findMemberByMemberId(String memberId);
+    MemberInfoResponseDTO findMemberInfoByMemberId(String memberId);
     HashMap<String, String> updateMemberInfo(String header, MemberUpdateRequestDTO memberUpdateRequestDTO);
     HashMap<String, Object> getMemberInfo(String header);
 }
