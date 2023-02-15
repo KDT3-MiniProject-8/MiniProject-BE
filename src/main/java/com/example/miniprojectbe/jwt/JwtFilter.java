@@ -30,7 +30,6 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        System.out.println(header);
 
         try {
             if (!blacklistRepository.existsByToken(header)) {
