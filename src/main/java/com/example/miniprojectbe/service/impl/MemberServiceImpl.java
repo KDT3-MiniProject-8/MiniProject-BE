@@ -95,6 +95,16 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public Member findMemberByMemberId(String memberId) {
+        try {
+            Member findMember = memberRepository.findByMemberId(memberId).get();
+            return findMember;
+        } catch (NoSuchElementException e) {
+            log.error("해당 memberId와 일치하는 회원이 없습니다.");
+            return null;
+        }
+    }
 
     private boolean isValidPassword(MemberLoginDTO memberLoginDTO, Member findMember) {
         return passwordEncoder.matches(memberLoginDTO.getPassword(), findMember.getPassword());
