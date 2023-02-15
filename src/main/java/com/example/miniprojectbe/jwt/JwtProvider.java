@@ -29,6 +29,8 @@ public class JwtProvider { //토큰 생성 및 검증 객체
                 .setIssuedAt(now) // 발급 시간 설정
                 .setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis())) //만료시간 설정
                 .claim("memberId", member.getMemberId()) //비공개 클레임 설정
+                .claim("bank", member.getBank())
+                .claim("category", member.getCategory())
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
 
