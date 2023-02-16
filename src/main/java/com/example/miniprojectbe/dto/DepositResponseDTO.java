@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DepositResponseDTO {
 
+    private String itemId;
     private String category;
     private String bank;
     private String itemName;
@@ -25,6 +26,7 @@ public class DepositResponseDTO {
     private String mature;
 
     public DepositResponseDTO(Deposit deposit) {
+        this.itemId=String.valueOf(deposit.getItemId());
         this.category = deposit.getCategory();
         this.bank = deposit.getBank();
         this.itemName = deposit.getItemName();

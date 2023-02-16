@@ -1,6 +1,5 @@
 package com.example.miniprojectbe.repository;
 
-import com.example.miniprojectbe.entity.Deposit;
 import com.example.miniprojectbe.entity.Loan;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -13,7 +12,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     Slice<Loan> findAllByCategory(String category, PageRequest pageRequest);
 
-    List<Loan> findAllByBankContainingOrItemNameContaining(String content1, String content2);
+    Slice<Loan> findAllByBankContainingOrItemNameContaining(String content1, String content2, PageRequest pageRequest);
 
     List<Loan> findTop3ByBankAndCategoryOrderByMinRateAsc(String bank, String category);
 

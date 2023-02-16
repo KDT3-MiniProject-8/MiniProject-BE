@@ -18,10 +18,16 @@ public class BasketController {
         return basketService.addCart(header, itemId);
     }
 
-    // 장바구니 조회
-    @GetMapping("/api/cartList")
-    public HashMap<String, Object> getCartList(@RequestHeader(name = "Authorization") String header) {
-        return basketService.getCartList(header);
+    // 장바구니 조회 (예적금)
+    @GetMapping("/api/deposit/cartList")
+    public HashMap<String, Object> getDepositCartList(@RequestHeader(name = "Authorization") String header, @RequestParam int page) {
+        return basketService.getDepositCartList(header, page);
+    }
+
+    // 장바구니 조회 (대출)
+    @GetMapping("/api/loan/cartList")
+    public HashMap<String, Object> getLoanCartList(@RequestHeader(name = "Authorization") String header, @RequestParam int page) {
+        return basketService.getLoanCartList(header, page);
     }
 
     // 장바구니 상품 삭제 (1개)

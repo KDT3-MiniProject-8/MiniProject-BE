@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class LoanProductDTO {
 
+    private String itemId;
     private String bank;
     private String itemName;
     private String type;
@@ -19,6 +20,7 @@ public class LoanProductDTO {
     private String maxRate;
 
     public LoanProductDTO(Loan loan){
+        this.itemId=String.valueOf(loan.getItemId());
         this.bank=loan.getBank();
         this.itemName=loan.getItemName();
         this.type=loan.getType();
