@@ -4,6 +4,8 @@ import com.example.miniprojectbe.dto.BasketId;
 import com.example.miniprojectbe.entity.Basket;
 import com.example.miniprojectbe.entity.Item;
 import com.example.miniprojectbe.entity.Member;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,4 +27,7 @@ public interface BasketRepository extends JpaRepository<Basket, BasketId> {
     void deleteByMemberId(@Param("memberId") String memberId);
 
     boolean existsByMemberAndItem(Member member, Item item);
+
+    @EntityGraph(attributePaths = {"member", "item"})
+    Slice<Basket> findByMember_MemberIdAndItem_CategoryOrItem_Category(String memberId, String category1, String category2, PageRequest pageRequest);
 }
