@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoanResponseDTO {
 
+    private String itemId;
     private String category;
     private String bank;
     private String itemName;
@@ -25,6 +26,7 @@ public class LoanResponseDTO {
     private String delay;
 
     public LoanResponseDTO(Loan loan) {
+        this.itemId=String.valueOf(loan.getItemId());
         this.category = loan.getCategory();
         this.bank = loan.getBank();
         this.itemName = loan.getItemName();

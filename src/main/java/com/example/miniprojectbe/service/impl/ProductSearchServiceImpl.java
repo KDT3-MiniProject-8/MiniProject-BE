@@ -6,11 +6,9 @@ import com.example.miniprojectbe.repository.DepositRepository;
 import com.example.miniprojectbe.repository.LoanRepository;
 import com.example.miniprojectbe.service.ProductSearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ProductSearchServiceImpl implements ProductSearchService {
@@ -19,17 +17,19 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     private final LoanRepository loanRepository;
 
     @Override
-    public List<DepositProductDTO> searchDeposit(String content) {
-        return depositRepository.findAllByBankContainingOrItemNameContaining(content, content)
-                .stream().map(DepositProductDTO::new)
-                .collect(Collectors.toList());
+    public Slice<DepositProductDTO> searchDeposit(String content, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);
+
+        return depositRepository.findAllByBankContainingOrItemNameContaining(content, content, pageRequest)
+                .map(DepositProductDTO::new);
     }
 
     @Override
-    public List<LoanProductDTO> searchLoan(String content) {
-        return loanRepository.findAllByBankContainingOrItemNameContaining(content, content)
-                .stream().map(LoanProductDTO::new)
-                .collect(Collectors.toList());
+    public Slice<LoanProductDTO> searchLoan(String content, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);
+
+        return loanRepository.findAllByBankContainingOrItemNameContaining(content, content, pageRequest)
+                .map(LoanProductDTO::new);
 
     }
 }
