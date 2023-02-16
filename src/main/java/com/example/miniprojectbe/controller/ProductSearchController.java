@@ -2,7 +2,6 @@ package com.example.miniprojectbe.controller;
 
 import com.example.miniprojectbe.dto.DepositProductDTO;
 import com.example.miniprojectbe.dto.LoanProductDTO;
-import com.example.miniprojectbe.dto.ProductRequestDTO;
 import com.example.miniprojectbe.service.ProductSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
@@ -17,14 +16,14 @@ public class ProductSearchController {
     private final ProductSearchService productSearchService;
 
     @GetMapping("/searchDeposit")
-    public Slice<DepositProductDTO> searchDeposit(@RequestParam ProductRequestDTO productRequestDTO){
-        return productSearchService.searchDeposit(productRequestDTO.getContent(), productRequestDTO.getPage());
+    public Slice<DepositProductDTO> searchDeposit(@RequestParam String content,@RequestParam int page){
+        return productSearchService.searchDeposit(content, page);
 
     }
 
     @GetMapping("/searchLoan")
-    public Slice<LoanProductDTO> searchLoan(@RequestParam ProductRequestDTO productRequestDTO){
-        return productSearchService.searchLoan(productRequestDTO.getContent(), productRequestDTO.getPage());
+    public Slice<LoanProductDTO> searchLoan(@RequestParam String content,@RequestParam int page){
+        return productSearchService.searchLoan(content, page);
 
     }
 }
