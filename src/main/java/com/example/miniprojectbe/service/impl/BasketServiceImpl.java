@@ -6,9 +6,9 @@ import com.example.miniprojectbe.entity.Item;
 import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.jwt.JwtProvider;
 import com.example.miniprojectbe.repository.BasketRepository;
+import com.example.miniprojectbe.repository.ItemRepository;
+import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.service.BasketService;
-import com.example.miniprojectbe.service.ItemService;
-import com.example.miniprojectbe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class BasketServiceImpl implements BasketService {
 
     private final BasketRepository basketRepository;
-    private final MemberService memberService;
-    private final ItemService itemService;
+    private final MemberRepository memberRepository;
+    private final ItemRepository itemRepository;
     private final JwtProvider jwtProvider;
 
     @Override
@@ -31,11 +31,17 @@ public class BasketServiceImpl implements BasketService {
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
 
-            Member member = memberService.findMemberByMemberId(memberId);
-            Item item = itemService.findItemByItemId(itemId);
+            Member member = memberRepository.findByMemberId(memberId).get();
+            Item item = itemRepository.findByItemId(itemId).get();
 
-            Basket basket = Basket.builder().member(member).item(item).build();
-            basketRepository.save(basket);
+            if (basketRepository.existsByMemberAndItem(member, item)) {
+                HashMap<String, String> result = new HashMap<>();
+                result.put("resultCode", "duplicate");
+                return result;
+            } else {
+                Basket basket = Basket.builder().member(member).item(item).build();
+                basketRepository.save(basket);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
