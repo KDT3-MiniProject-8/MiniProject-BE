@@ -2,6 +2,8 @@ package com.example.miniprojectbe.repository;
 
 import com.example.miniprojectbe.dto.BasketId;
 import com.example.miniprojectbe.entity.Basket;
+import com.example.miniprojectbe.entity.Item;
+import com.example.miniprojectbe.entity.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,4 +23,6 @@ public interface BasketRepository extends JpaRepository<Basket, BasketId> {
     @Modifying
     @Query("delete from Basket basket where basket.member.memberId = :memberId")
     void deleteByMemberId(@Param("memberId") String memberId);
+
+    boolean existsByMemberAndItem(Member member, Item item);
 }
