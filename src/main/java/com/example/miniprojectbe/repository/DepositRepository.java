@@ -6,6 +6,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DepositRepository extends JpaRepository<Deposit, Long> {
 
@@ -14,5 +15,7 @@ public interface DepositRepository extends JpaRepository<Deposit, Long> {
     Slice<Deposit> findAllByCategory(String category, PageRequest pageRequest);
     List<Deposit> findTop3ByBankAndCategoryOrderByRateDesc(String bank, String category);
     Slice<Deposit> findByBankOrCategoryOrPreferenceOrTargetOrderByRateDesc(String bank, String category, String preference, String target, PageRequest pageRequest);
+
+    Optional<Deposit> findByItemId(Long itemId);
 
 }
