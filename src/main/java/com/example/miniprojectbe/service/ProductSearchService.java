@@ -2,11 +2,9 @@ package com.example.miniprojectbe.service;
 
 import com.example.miniprojectbe.dto.DepositProductDTO;
 import com.example.miniprojectbe.dto.LoanProductDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Slice;
 
 public interface ProductSearchService {
-
-    List<DepositProductDTO> searchDeposit(String content);
-    List<LoanProductDTO> searchLoan(String content);
+    Slice<DepositProductDTO> searchDeposit(String category, int page);
+    Slice<LoanProductDTO> searchLoan(String category, int page);
 }
