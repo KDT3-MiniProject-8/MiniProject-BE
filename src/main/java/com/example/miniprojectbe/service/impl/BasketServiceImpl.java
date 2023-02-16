@@ -34,8 +34,14 @@ public class BasketServiceImpl implements BasketService {
             Member member = memberService.findMemberByMemberId(memberId);
             Item item = itemService.findItemByItemId(itemId);
 
-            Basket basket = Basket.builder().member(member).item(item).build();
-            basketRepository.save(basket);
+            if (basketRepository.existsByMemberAndItem(member, item)) {
+                HashMap<String, String> result = new HashMap<>();
+                result.put("resultCode", "duplicate");
+                return result;
+            } else {
+                Basket basket = Basket.builder().member(member).item(item).build();
+                basketRepository.save(basket);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
