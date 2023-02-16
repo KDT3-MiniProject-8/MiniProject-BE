@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class MemberController {
 
     private final MemberService memberService;
