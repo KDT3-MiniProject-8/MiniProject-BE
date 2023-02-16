@@ -8,6 +8,8 @@ import com.example.miniprojectbe.repository.ItemRepository;
 import com.example.miniprojectbe.repository.LoanRepository;
 import com.example.miniprojectbe.service.RecommendService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -51,6 +53,50 @@ public class RecommendServiceImpl implements RecommendService {
                     .stream()
                     .map(RecommendLoanResponseDTO::new)
                     .collect(Collectors.toList());
+
+            result.put("resultCode", "success");
+            result.put("resultData", recommendLoanResponseDTOS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("resultCode", "failed");
+            return result;
+        }
+
+        return result;
+    }
+
+    @Override
+    public HashMap<String, Object> recommendCustomDepositList(String bank, String category, String preference, String target, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);
+        HashMap<String, Object> result = new HashMap<>();
+
+        try {
+            Slice<RecommendDepositResponseDTO> recommendDepositResponseDTOS
+                    = depositRepository.findByBankOrCategoryOrPreferenceOrTargetOrderByRateDesc(bank, category, preference, target, pageRequest)
+                                        .map(RecommendDepositResponseDTO::new);
+
+            result.put("resultCode", "success");
+            result.put("resultData", recommendDepositResponseDTOS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("resultCode", "failed");
+            return result;
+        }
+
+        return result;
+    }
+
+    @Override
+    public HashMap<String, Object> recommendCustomLoanList(String bank, String category, String preference, String target, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);
+        HashMap<String, Object> result = new HashMap<>();
+
+        try {
+            Slice<RecommendLoanResponseDTO> recommendLoanResponseDTOS
+                    = loanRepository.findByBankOrCategoryOrPreferenceOrTargetOrderByMinRateAsc(bank, category, preference, target, pageRequest)
+                                    .map(RecommendLoanResponseDTO::new);
 
             result.put("resultCode", "success");
             result.put("resultData", recommendLoanResponseDTOS);
