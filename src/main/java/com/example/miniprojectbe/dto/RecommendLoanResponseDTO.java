@@ -20,7 +20,6 @@ public class RecommendLoanResponseDTO {
     private String type;
     private BigDecimal minRate;
     private BigDecimal maxRate;
-    private String delay;
 
     public RecommendLoanResponseDTO (Loan loan) {
         this.itemId = loan.getItemId();
@@ -30,7 +29,6 @@ public class RecommendLoanResponseDTO {
         this.type = loan.getType();
         this.minRate = loan.getMinRate();
         this.maxRate = loan.getMaxRate();
-        this.delay = loan.getDelay();
     }
 
 }
