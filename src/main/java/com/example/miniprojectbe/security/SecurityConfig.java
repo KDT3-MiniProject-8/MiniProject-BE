@@ -13,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
@@ -36,6 +39,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
+                .cors()
+                .and()
                 .authorizeRequests() //다음 리퀘스트에 대한 사용권한 체크
                 .mvcMatchers(PUBLIC_URLS).permitAll() //회원가입 메인페이지 로그인 주소는 누구나 접근 가능
                 .and()
@@ -50,6 +55,22 @@ public class SecurityConfig {
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
                 ).build(); //인증 처리 기본필터 외에 별도의 인증로직 가진 필터를 생성하고 사용하고 싶을 때
+    }
+
+    //Cors 설정
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.addExposedHeader("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
