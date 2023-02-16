@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class BasketController {
 
     private final BasketService basketService;

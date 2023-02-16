@@ -6,12 +6,14 @@ import com.example.miniprojectbe.dto.LoanResponseDTO;
 import com.example.miniprojectbe.service.SearchListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class SearchListController {
 
     private final SearchListService searchListService;

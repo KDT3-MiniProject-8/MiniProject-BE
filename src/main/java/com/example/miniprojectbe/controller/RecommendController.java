@@ -7,15 +7,13 @@ import com.example.miniprojectbe.jwt.JwtProvider;
 import com.example.miniprojectbe.service.MemberService;
 import com.example.miniprojectbe.service.RecommendService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class RecommendController {
 
     private final MemberService memberService;
