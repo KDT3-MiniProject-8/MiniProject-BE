@@ -10,12 +10,12 @@ import com.example.miniprojectbe.repository.ItemRepository;
 import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.service.BasketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,16 +51,26 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public HashMap<String, Object> getCartList(String header) {
+    public HashMap<String, Object> getDepositCartList(String header, int page) {
 
+        return getCartList(header, page, "정기예금", "적금");
+    }
+
+    @Override
+    public HashMap<String, Object> getLoanCartList(String header, int page) {
+
+        return getCartList(header, page, "주택담보대출", "전세자금대출");
+    }
+
+    private HashMap<String, Object> getCartList(String header, int page, String category1, String category2) {
+
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);
         HashMap<String, Object> result = new HashMap<>();
 
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            List<BasketResponseDTO> basketResponseDTOS = basketRepository.findByMember_MemberId(memberId)
-                    .stream()
-                    .map(BasketResponseDTO::new)
-                    .collect(Collectors.toList());
+            Slice<BasketResponseDTO> basketResponseDTOS = basketRepository.findByMember_MemberIdAndItem_CategoryOrItem_Category(memberId, category1, category2, pageRequest)
+                    .map(BasketResponseDTO::new);
 
             result.put("resultCode", "success");
             result.put("resultData", basketResponseDTOS);
