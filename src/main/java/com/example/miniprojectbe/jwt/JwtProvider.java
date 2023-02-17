@@ -49,7 +49,7 @@ public class JwtProvider { //토큰 생성 및 검증 객체
             log.error("토큰이 존재하지 않습니다.(2)");
         }
 
-        return null;
+        return new MemberLoginDTO();
     }
 
     public Claims tokenToMember(String token) { //토큰 값을 claims로 바꿔줘서 리턴
