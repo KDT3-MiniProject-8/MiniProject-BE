@@ -18,8 +18,6 @@ public class MemberLoginDTO {
 
     private String memberId;
     private String password;
-    private String bank;
-    private String category;
 
     public MemberLoginDTO(Claims claims) {
         this.memberId = claims.get("memberId", String.class);

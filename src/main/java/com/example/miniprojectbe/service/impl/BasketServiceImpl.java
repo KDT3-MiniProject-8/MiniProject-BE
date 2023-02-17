@@ -15,7 +15,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -52,24 +54,28 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public HashMap<String, Object> getDepositCartList(String header, int page) {
-
-        return getCartList(header, page, "정기예금", "적금");
+        List<String> category = new ArrayList<>();
+        category.add("정기예금");
+        category.add("적금");
+        return getCartList(header, category, page);
     }
 
     @Override
     public HashMap<String, Object> getLoanCartList(String header, int page) {
-
-        return getCartList(header, page, "주택담보대출", "전세자금대출");
+        List<String> category = new ArrayList<>();
+        category.add("전세자금대출");
+        category.add("주택담보대출");
+        return getCartList(header, category, page);
     }
 
-    private HashMap<String, Object> getCartList(String header, int page, String category1, String category2) {
+    private HashMap<String, Object> getCartList(String header, List<String> category, int page) {
 
         PageRequest pageRequest = PageRequest.of(page - 1, 10);
         HashMap<String, Object> result = new HashMap<>();
 
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            Slice<BasketResponseDTO> basketResponseDTOS = basketRepository.findByMember_MemberIdAndItem_CategoryOrItem_Category(memberId, category1, category2, pageRequest)
+            Slice<BasketResponseDTO> basketResponseDTOS = basketRepository.findByMemberIdAndCategory(memberId, category, pageRequest)
                     .map(BasketResponseDTO::new);
 
             result.put("resultCode", "success");

@@ -29,5 +29,6 @@ public interface BasketRepository extends JpaRepository<Basket, BasketId> {
     boolean existsByMemberAndItem(Member member, Item item);
 
     @EntityGraph(attributePaths = {"member", "item"})
-    Slice<Basket> findByMember_MemberIdAndItem_CategoryOrItem_Category(String memberId, String category1, String category2, PageRequest pageRequest);
+    @Query("SELECT b FROM Basket b WHERE b.member.memberId = :memberId AND b.item.category IN (:category)")
+    Slice<Basket> findByMemberIdAndCategory(String memberId, List<String> category, PageRequest pageRequest);
 }
