@@ -67,7 +67,7 @@ jobs:
       run:
         aws deploy create-deployment
         --application-name fincok
-        --deployment-group-name fincok-codeDeploy
+        --deployment-group-name fincok
         --file-exists-behavior OVERWRITE
         --s3-location bucket=fincok-deploy,bundleType=zip,key=fincok.zip
         --region ap-northeast-2
