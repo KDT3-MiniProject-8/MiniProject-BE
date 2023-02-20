@@ -19,7 +19,7 @@ public class RecommendController {
     private final MemberService memberService;
     private final RecommendService recommendService;
     private final JwtProvider jwtProvider;
-    @GetMapping("/mainRecommend")
+    @GetMapping("/main_recommend")
     public HashMap<String, Object> getRecommendList(@RequestHeader(name = "Authorization") String header) {
         MemberLoginDTO memberLoginDTO = jwtProvider.getMemberDTO(header);
         MemberInfoResponseDTO findMember = memberService.findMemberInfoByMemberId(memberLoginDTO.getMemberId());
@@ -34,7 +34,7 @@ public class RecommendController {
         }
     }
 
-    @GetMapping("/customRecommend")
+    @GetMapping("/custom_recommend")
     public HashMap<String, Object> getCustomRecommendList(@RequestHeader(name = "Authorization") String header, @RequestParam(name = "page") int page) {
         MemberLoginDTO memberLoginDTO = jwtProvider.getMemberDTO(header);
         MemberInfoResponseDTO findMember = memberService.findMemberInfoByMemberId(memberLoginDTO.getMemberId());

@@ -19,19 +19,15 @@ public class SelectDetailController {
 
     private final SelectDetailServiceImpl selectDetailService;
 
-    @GetMapping("/searchDepositDetail/{itemId}")
+    @GetMapping("/search/deposit/detail/{itemId}")
     public DepositDetailDTO searchDeposit(@PathVariable Long itemId){
 
         return selectDetailService.selectDetailDeposit(itemId);
     }
 
-    @GetMapping("/searchLoanDetail/{itemId}")
+    @GetMapping("/search/loan/detail/{itemId}")
     public LoanDetailDTO searchLoan(@PathVariable Long itemId){
 
         return selectDetailService.selectDetailLoan(itemId);
     }
-
-
-
-
 }
