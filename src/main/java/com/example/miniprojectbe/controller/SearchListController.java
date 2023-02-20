@@ -18,25 +18,25 @@ public class SearchListController {
 
     private final SearchListService searchListService;
 
-    @GetMapping("/depositList")
+    @GetMapping("/deposit_list")
     public Slice<DepositResponseDTO> depositList(@RequestParam int page){
         SearchListRequestDTO input = new SearchListRequestDTO();
         input.setCategory("정기예금");
         return searchListService.pagingByDeposit(input.getCategory(), page);
     }
-    @GetMapping("/savingsList")
+    @GetMapping("/savings_list")
     public Slice<DepositResponseDTO> savingsList(@RequestParam int page){
         SearchListRequestDTO input = new SearchListRequestDTO();
         input.setCategory("적금");
         return searchListService.pagingByDeposit(input.getCategory(), page);
     }
-    @GetMapping("/mortgageLoan")
+    @GetMapping("/mortgage_loan")
     public Slice<LoanResponseDTO> mortgageLoan(@RequestParam int page){
         SearchListRequestDTO input = new SearchListRequestDTO();
         input.setCategory("주택담보대출");
         return searchListService.pagingByLoan(input.getCategory(),page);
     }
-    @GetMapping("/charterLoan")
+    @GetMapping("/charter_loan")
     public Slice<LoanResponseDTO> charterLoan(@RequestParam int page){
         SearchListRequestDTO input = new SearchListRequestDTO();
         input.setCategory("전세자금대출");

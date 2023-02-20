@@ -17,13 +17,13 @@ public class ProductSearchController {
 
     private final ProductSearchService productSearchService;
 
-    @GetMapping("/searchDeposit")
+    @GetMapping("/search_deposit")
     public Slice<DepositProductDTO> searchDeposit(@RequestParam String content,@RequestParam int page){
         return productSearchService.searchDeposit(content, page);
 
     }
 
-    @GetMapping("/searchLoan")
+    @GetMapping("/search_loan")
     public Slice<LoanProductDTO> searchLoan(@RequestParam String content,@RequestParam int page){
         return productSearchService.searchLoan(content, page);
 

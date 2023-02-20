@@ -38,12 +38,12 @@ public class MemberController {
         return memberService.saveHeaderTokenToBlackList(header);
     }
 
-    @PostMapping("/api/duplication/{memberId}")
+    @PostMapping("/duplication/{memberId}")
     public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String memberId) {
         return ResponseEntity.ok(memberService.checkEmailDuplicate(memberId));
     }
 
-    @GetMapping("/findPw")
+    @GetMapping("/find_password")
     public HashMap<String, String> findPassword(@RequestParam(name = "memberId") String memberId,
                                                 @RequestParam(name = "name") String name) {
         HashMap<String, String>result= new HashMap<>();
@@ -52,7 +52,7 @@ public class MemberController {
         return result;
     }
 
-    @PostMapping("/findPw/sendMail")
+    @PostMapping("/find_password/send_mail")
     public HashMap<String, String> sendMail(@RequestParam(name = "memberId") String memberId,
                                             @RequestParam(name = "name") String name) {
         HashMap<String, String> result = new HashMap<>();
