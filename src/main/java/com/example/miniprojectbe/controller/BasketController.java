@@ -32,9 +32,9 @@ public class BasketController {
     }
 
     // 장바구니 상품 삭제 (1개)
-    @DeleteMapping("/wish/delete/{basketId}")
-    public HashMap<String, String> deleteCartByBasketId(@PathVariable Long basketId) {
-        return basketService.deleteCartByBasketId(basketId);
+    @DeleteMapping("/wish/delete/{itemId}")
+    public HashMap<String, String> deleteCartByBasketId(@RequestHeader(name = "Authorization") String header, @PathVariable Long itemId) {
+        return basketService.deleteCartByMemberIdAndItemId(header, itemId);
     }
 
     // 장바구니 비우기 (나의 장바구니에 담긴 상품 전체 삭제)

@@ -1,6 +1,6 @@
 package com.example.miniprojectbe.repository;
 
-import com.example.miniprojectbe.dto.PurchaseId;
+import com.example.miniprojectbe.entity.PurchaseId;
 import com.example.miniprojectbe.entity.Item;
 import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.entity.Purchase;

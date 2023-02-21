@@ -1,6 +1,6 @@
 package com.example.miniprojectbe.repository;
 
-import com.example.miniprojectbe.dto.BasketId;
+import com.example.miniprojectbe.entity.BasketId;
 import com.example.miniprojectbe.entity.Basket;
 import com.example.miniprojectbe.entity.Item;
 import com.example.miniprojectbe.entity.Member;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface BasketRepository extends JpaRepository<Basket, BasketId> {
 
     @EntityGraph(attributePaths = {"member", "item"})
-    List<Basket> findByMember_MemberId(String memberId);
+    Optional<Basket> findByMember_MemberIdAndItem_ItemId(String memberId, Long itemId);
 
     Optional<Basket> findByBasket(Long basketId);
 
