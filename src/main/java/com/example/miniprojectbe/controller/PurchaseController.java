@@ -1,7 +1,11 @@
 package com.example.miniprojectbe.controller;
 
+import com.example.miniprojectbe.dto.MailDTO;
 import com.example.miniprojectbe.service.PurchaseService;
+import com.example.miniprojectbe.service.impl.CreateMailServiceImpl;
+import com.example.miniprojectbe.service.impl.SendMailServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -9,14 +13,34 @@ import java.util.HashMap;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Slf4j
 public class PurchaseController {
 
     private final PurchaseService purchaseService;
+    private final SendMailServiceImpl sendMailServiceImpl;
+    private final CreateMailServiceImpl createMailServiceImpl;
 
     // 상품 구매(신청)
     @PostMapping("/purchase")
     public HashMap<String, String> addPurchase(@RequestHeader(name = "Authorization") String header, Long itemId) {
         return purchaseService.addPurchase(header, itemId);
+    }
+
+    @PostMapping("/purchase/send_mail")
+    public String sendPurchaseMail(@RequestHeader(name = "Authorization") String header, Long itemId) {
+        MailDTO purchaseMail = createMailServiceImpl.createPurchaseMail(header, itemId);
+        try {
+            if (purchaseMail != null) {
+                sendMailServiceImpl.sendMail(purchaseMail);
+                return "success";
+            }
+        } catch (Exception e) {
+            log.error("메일 전송에 실패하였습니다.");
+            e.printStackTrace();
+            return "failed";
+        }
+
+        return "failed";
     }
 
     // 구매(신청) 조회 (예적금)

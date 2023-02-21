@@ -187,5 +187,5 @@ gradle-app.setting
 
 application.properties
 application.yml
-keystore.p12
+application.properties
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,intellij+iml,gradle,java,vim,git

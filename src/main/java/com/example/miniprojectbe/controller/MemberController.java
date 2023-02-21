@@ -5,7 +5,7 @@ import com.example.miniprojectbe.dto.MemberRequestDTO;
 import com.example.miniprojectbe.dto.MemberLoginDTO;
 import com.example.miniprojectbe.dto.MemberUpdateRequestDTO;
 import com.example.miniprojectbe.service.MemberService;
-import com.example.miniprojectbe.service.impl.CreateMailAndUpdatePwServiceImpl;
+import com.example.miniprojectbe.service.impl.CreateMailServiceImpl;
 import com.example.miniprojectbe.service.impl.SendMailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final SendMailServiceImpl sendMailServiceImpl;
-    private final CreateMailAndUpdatePwServiceImpl createMailAndUpdatePwServiceImpl;
+    private final CreateMailServiceImpl createMailServiceImpl;
 
     @PostMapping("/signup")
     public HashMap<String, String> signup(MemberRequestDTO memberRequestDTO){
@@ -57,7 +57,7 @@ public class MemberController {
                                             @RequestParam(name = "name") String name) {
         HashMap<String, String> result = new HashMap<>();
 
-        MailDTO mailDTO = createMailAndUpdatePwServiceImpl.createMailAndChangePassword(memberId, name);
+        MailDTO mailDTO = createMailServiceImpl.createMailAndChangePassword(memberId, name);
 
         try {
             sendMailServiceImpl.sendMail(mailDTO);
