@@ -23,6 +23,22 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        
+# application.properties 파일 추가
+    - name: Copy Secret
+      env:
+          OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
+          OCCUPY_SECRET_DIR: src/main/resources
+          OCCUPY_SECRET_DIR_FILE_NAME: application.properties
+      run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+      
+# application.yml 파일 추가
+    - name: Copy Secret2
+      env:
+          OCCUPY_SECRET2: ${{ secrets.OCCUPY_SECRET2 }}
+          OCCUPY_SECRET2_DIR: src/main/resources
+          OCCUPY_SECRET2_DIR_FILE_NAME: application.yml
+      run: echo $OCCUPY_SECRET2 | base64 --decode > $OCCUPY_SECRET2_DIR/$OCCUPY_SECRET2_DIR_FILE_NAME
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -71,19 +87,3 @@ jobs:
         --file-exists-behavior OVERWRITE
         --s3-location bucket=fincok-deploy,bundleType=zip,key=fincok.zip
         --region ap-northeast-2
-        
-# application.properties 파일 추가
-    - name: Copy Secret
-      env:
-          OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
-          OCCUPY_SECRET_DIR: src/main/resources
-          OCCUPY_SECRET_DIR_FILE_NAME: application.properties
-      run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
-      
-# application.yml 파일 추가
-    - name: Copy Secret2
-      env:
-          OCCUPY_SECRET2: ${{ secrets.OCCUPY_SECRET2 }}
-          OCCUPY_SECRET2_DIR: src/main/resources
-          OCCUPY_SECRET2_DIR_FILE_NAME: application.yml
-      run: echo $OCCUPY_SECRET2 | base64 --decode > $OCCUPY_SECRET2_DIR/$OCCUPY_SECRET2_DIR_FILE_NAME
