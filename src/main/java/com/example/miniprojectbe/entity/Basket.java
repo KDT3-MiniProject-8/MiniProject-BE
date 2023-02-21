@@ -1,6 +1,5 @@
 package com.example.miniprojectbe.entity;
 
-import com.example.miniprojectbe.dto.BasketId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
