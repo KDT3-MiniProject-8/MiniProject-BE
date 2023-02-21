@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface BasketRepository extends JpaRepository<Basket, BasketId> {
 
     @EntityGraph(attributePaths = {"member", "item"})
-    List<Basket> findByMember_MemberId(String memberId);
+    Optional<Basket> findByMember_MemberIdAndItem_ItemId(String memberId, Long itemId);
 
     Optional<Basket> findByBasket(Long basketId);
 
