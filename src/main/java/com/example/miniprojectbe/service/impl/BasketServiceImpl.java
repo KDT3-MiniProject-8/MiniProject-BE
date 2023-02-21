@@ -90,9 +90,10 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public HashMap<String, String> deleteCartByBasketId(Long basketId) {
+    public HashMap<String, String> deleteCartByMemberIdAndItemId(String header, Long itemId) {
         try {
-            Basket basket =  basketRepository.findByBasket(basketId).get();
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            Basket basket =  basketRepository.findByMember_MemberIdAndItem_ItemId(memberId, itemId).get();
             basketRepository.delete(basket);
         } catch (Exception e) {
             e.printStackTrace();
