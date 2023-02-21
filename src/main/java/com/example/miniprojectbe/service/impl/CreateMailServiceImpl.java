@@ -1,6 +1,10 @@
 package com.example.miniprojectbe.service.impl;
 
 import com.example.miniprojectbe.dto.MailDTO;
+import com.example.miniprojectbe.entity.Item;
+import com.example.miniprojectbe.entity.Member;
+import com.example.miniprojectbe.jwt.JwtProvider;
+import com.example.miniprojectbe.repository.ItemRepository;
 import com.example.miniprojectbe.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CreateMailAndUpdatePwServiceImpl {
+public class CreateMailServiceImpl {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final ItemRepository itemRepository;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public MailDTO createMailAndChangePassword(String memberId, String name){
@@ -26,6 +32,29 @@ public class CreateMailAndUpdatePwServiceImpl {
                 + tempPassword + " 입니다.");
         updatePassword(tempPassword, memberId);
         return mailDTO;
+    }
+
+    public MailDTO createPurchaseMail(String header, Long itemId){
+        try {
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            Member member = memberRepository.findByMemberId(memberId).get();
+            Item item = itemRepository.findByItemId(itemId).get();
+
+            String name = member.getName();
+            String category = item.getCategory();
+            String itemName = item.getItemName();
+
+            MailDTO mailDTO = new MailDTO();
+            mailDTO.setAddress(memberId);
+            mailDTO.setTitle(name + "님의 fincok " + category + " 상품 신청 관련 안내 이메일 입니다.");
+            mailDTO.setMessage("안녕하세요. fincok " + category + " 상품 신청 관련 안내 이메일 입니다.\n" + "[" + name + "]" + "님께서 신청하신 [" + itemName + "]의 신청이 완료 되었습니다.");
+
+            return mailDTO;
+        } catch (Exception e) {
+            log.error("메일 생성에 실패하였습니다.");
+            e.printStackTrace();
+            return new MailDTO();
+        }
     }
 
     @Transactional
