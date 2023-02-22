@@ -23,4 +23,6 @@ public interface PurchaseRepository extends JpaRepository<Purchase, PurchaseId> 
     @Query("SELECT b FROM Purchase b WHERE b.member.memberId = :memberId AND b.item.category IN (:category)")
     Slice<Purchase> findByMemberIdAndCategory(String memberId, List<String> category, PageRequest pageRequest);
 
+    Integer countByMember_MemberId(String memberId);
+
 }
