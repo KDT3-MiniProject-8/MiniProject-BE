@@ -32,7 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         try {
-            if (!blacklistRepository.existsByToken(header)) {
+            if (header != null && !blacklistRepository.existsByToken(header)) {
                 MemberLoginDTO memberLoginDTO = jwtProvider.getMemberDTO(header);
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken(memberLoginDTO, null, memberLoginDTO.getAuthorities()));
