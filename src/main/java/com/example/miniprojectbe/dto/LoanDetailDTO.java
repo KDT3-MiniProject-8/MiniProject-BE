@@ -26,7 +26,7 @@ public class LoanDetailDTO {
     private BigDecimal minRate;
     private BigDecimal maxRate;
     private String delay;
-    private Boolean basket;
+    private Boolean wish;
 
     @Builder
     public LoanDetailDTO(Long itemId, String category, String bank, String itemName, String type, String join, int limit, String preference, String target, BigDecimal minRate, BigDecimal maxRate, String delay) {
@@ -45,7 +45,7 @@ public class LoanDetailDTO {
     }
 
 
-    public LoanDetailDTO(Loan loan, Boolean basket) {
+    public LoanDetailDTO(Loan loan, Boolean wish) {
         this.itemId = loan.getItemId();
         this.category = loan.getCategory();
         this.bank = loan.getBank();
@@ -58,6 +58,6 @@ public class LoanDetailDTO {
         this.minRate = loan.getMinRate();
         this.maxRate = loan.getMaxRate();
         this.delay = loan.getDelay();
-        this.basket = basket;
+        this.wish = wish;
     }
 }

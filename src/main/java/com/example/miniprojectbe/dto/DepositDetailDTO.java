@@ -25,7 +25,7 @@ public class DepositDetailDTO {
     private BigDecimal rate;
     private BigDecimal prefRate;
     private String mature;
-    private Boolean basket;
+    private Boolean wish;
 
     @Builder
     public DepositDetailDTO(Long itemId, String category, String bank, String itemName, String type, String join, int limit, String preference, String target, BigDecimal rate, BigDecimal prefRate, String mature) {
@@ -43,7 +43,7 @@ public class DepositDetailDTO {
         this.mature = mature;
     }
 
-    public DepositDetailDTO(Deposit deposit, Boolean basket) {
+    public DepositDetailDTO(Deposit deposit, Boolean wish) {
         this.itemId = deposit.getItemId();
         this.category = deposit.getCategory();
         this.bank = deposit.getBank();
@@ -56,7 +56,7 @@ public class DepositDetailDTO {
         this.rate = deposit.getRate();
         this.prefRate = deposit.getPrefRate();
         this.mature = deposit.getMature();
-        this.basket = basket;
+        this.wish = wish;
     }
 
 
