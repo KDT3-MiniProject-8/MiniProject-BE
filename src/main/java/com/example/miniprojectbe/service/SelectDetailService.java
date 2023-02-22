@@ -5,9 +5,9 @@ import com.example.miniprojectbe.dto.LoanDetailDTO;
 
 public interface SelectDetailService {
 
-    LoanDetailDTO selectDetailLoan(Long itemId);
+    LoanDetailDTO selectDetailLoan(Long itemId, String header);
 
-    DepositDetailDTO selectDetailDeposit(Long itemId);
+    DepositDetailDTO selectDetailDeposit(Long itemId, String header);
 
 
 }

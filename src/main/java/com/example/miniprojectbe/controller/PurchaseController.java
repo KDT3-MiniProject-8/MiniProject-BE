@@ -60,5 +60,10 @@ public class PurchaseController {
     public HashMap<String, String> deletePurchaseByPurchaseId(@PathVariable Long purchaseId) {
         return purchaseService.deletePurchaseByPurchaseId(purchaseId);
     }
+    // 구매(신청)한 상품 갯수
+    @GetMapping("/count_purchase")
+    public HashMap<String, Object> countPurchase(@RequestHeader(name = "Authorization") String header){
+        return purchaseService.countPurchase(header);
+    }
 
 }
