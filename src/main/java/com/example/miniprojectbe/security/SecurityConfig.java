@@ -26,8 +26,8 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     private static final String[] PUBLIC_URLS = { // 이 URL은 권한검사 하지 않음
-            "/signup", "/login", "/", "/logout", "/findPw", "/findPw/sendMail",
-            "/depositList", "/savingsList","/mortgageLoan", "/charterLoan", "/api/duplication/{memberId}"
+            "/signup", "/login", "/", "/logout", "/find_password", "/find_password/send_mail",
+            "/deposit_list", "/savings_list","/mortgage_loan", "/charter_loan", "/duplication/{memberId}"
 
     };
 
