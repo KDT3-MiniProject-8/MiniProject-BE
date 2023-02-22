@@ -108,6 +108,23 @@ public class PurchaseServiceImpl implements PurchaseService {
         return returnSuccess();
     }
 
+    @Override
+    public HashMap<String, Object> countPurchase(String header) {
+        HashMap<String, Object> result = new HashMap<>();
+        try {
+            String memberId = jwtProvider.getMemberIdByHeader(header);
+            Integer countPurchase = purchaseRepository.countByMember_MemberId(memberId);
+            result.put("resultCode", "success");
+            result.put("resultData", countPurchase);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("resultCode", "failed");
+            return result;
+        }
+        return result;
+    }
+
     private HashMap<String, String> returnFailed() {
         HashMap<String, String> result = new HashMap<>();
         result.put("resultCode", "failed");

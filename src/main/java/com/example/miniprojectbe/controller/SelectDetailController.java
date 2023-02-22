@@ -5,10 +5,7 @@ import com.example.miniprojectbe.dto.LoanDetailDTO;
 import com.example.miniprojectbe.service.impl.SelectDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -20,14 +17,14 @@ public class SelectDetailController {
     private final SelectDetailServiceImpl selectDetailService;
 
     @GetMapping("/search/deposit/detail/{itemId}")
-    public DepositDetailDTO searchDeposit(@PathVariable Long itemId){
+    public DepositDetailDTO searchDeposit(@PathVariable Long itemId, @RequestHeader(name = "Authorization")String header){
 
-        return selectDetailService.selectDetailDeposit(itemId);
+        return selectDetailService.selectDetailDeposit(itemId, header);
     }
 
     @GetMapping("/search/loan/detail/{itemId}")
-    public LoanDetailDTO searchLoan(@PathVariable Long itemId){
+    public LoanDetailDTO searchLoan(@PathVariable Long itemId, @RequestHeader(name = "Authorization")String header){
 
-        return selectDetailService.selectDetailLoan(itemId);
+        return selectDetailService.selectDetailLoan(itemId,header);
     }
 }

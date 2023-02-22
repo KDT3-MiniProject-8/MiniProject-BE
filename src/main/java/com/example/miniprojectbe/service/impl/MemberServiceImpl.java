@@ -1,7 +1,10 @@
 package com.example.miniprojectbe.service.impl;
 
 
-import com.example.miniprojectbe.dto.*;
+import com.example.miniprojectbe.dto.MemberInfoResponseDTO;
+import com.example.miniprojectbe.dto.MemberLoginDTO;
+import com.example.miniprojectbe.dto.MemberRequestDTO;
+import com.example.miniprojectbe.dto.MemberUpdateRequestDTO;
 import com.example.miniprojectbe.entity.Blacklist;
 import com.example.miniprojectbe.entity.Member;
 import com.example.miniprojectbe.jwt.JwtProvider;
@@ -13,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -55,6 +57,8 @@ public class MemberServiceImpl implements MemberService {
             Member findMember = memberRepository.findByMemberId(memberLoginDTO.getMemberId()).get();
             if (isValidPassword(memberLoginDTO, findMember)) {
                 String accessToken = jwtProvider.makeToken(findMember);
+
+                result.put("memberName",findMember.getName());
                 result.put("resultCode", "success");
                 result.put("accessToken", accessToken);
 

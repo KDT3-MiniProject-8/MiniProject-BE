@@ -8,4 +8,5 @@ public interface PurchaseService {
     HashMap<String, Object> getDepositPurchaseList(String header, int page);
     HashMap<String, Object> getLoanPurchaseList(String header, int page);
     HashMap<String, String> deletePurchaseByPurchaseId(Long purchaseId);
+    HashMap<String, Object> countPurchase(String header);
 }
