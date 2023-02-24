@@ -30,16 +30,20 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final JwtProvider jwtProvider;
 
     @Override
+    @Transactional
     public HashMap<String, String> addPurchase(String header, Long itemId) {
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
             Member member = memberRepository.findByMemberId(memberId).get();
             Item item = itemRepository.findByItemId(itemId).get();
 
-            if (purchaseRepository.existsByMemberAndItem(member, item)) {
+            if (purchaseRepository.existsByMemberAndItemAndStatus(member, item, "신청완료")) {
                 HashMap<String, String> result = new HashMap<>();
                 result.put("resultCode", "duplicate");
                 return result;
+            } else if (purchaseRepository.existsByMember_MemberIdAndItem_ItemIdAndStatus(memberId, itemId, "신청취소")) {
+                Purchase purchase =  purchaseRepository.findByMember_MemberIdAndItem_ItemId(memberId, itemId).orElse(null);
+                purchase.updateStatus();
             } else {
                 Purchase purchase = Purchase.builder()
                         .member(member)
@@ -113,7 +117,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         HashMap<String, Object> result = new HashMap<>();
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            Integer countPurchase = purchaseRepository.countByMember_MemberId(memberId);
+            Integer countPurchase = purchaseRepository.countByMember_MemberIdAndStatus(memberId,"신청완료");
             result.put("resultCode", "success");
             result.put("resultData", countPurchase);
 
