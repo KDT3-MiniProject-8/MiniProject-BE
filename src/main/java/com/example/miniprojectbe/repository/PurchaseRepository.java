@@ -17,12 +17,17 @@ public interface PurchaseRepository extends JpaRepository<Purchase, PurchaseId> 
 
     Optional<Purchase> findByPurchaseId(Long purchaseId);
 
-    boolean existsByMemberAndItem(Member member, Item item);
+    @EntityGraph(attributePaths = {"member", "item"})
+    Optional<Purchase> findByMember_MemberIdAndItem_ItemId(String memberId, Long itemId);
+
+    boolean existsByMemberAndItemAndStatus(Member member, Item item, String status);
+
+    boolean existsByMember_MemberIdAndItem_ItemIdAndStatus(String memberId, Long itemId, String status);
 
     @EntityGraph(attributePaths = {"member", "item"})
     @Query("SELECT b FROM Purchase b WHERE b.member.memberId = :memberId AND b.item.category IN (:category)")
     Slice<Purchase> findByMemberIdAndCategory(String memberId, List<String> category, PageRequest pageRequest);
 
-    Integer countByMember_MemberId(String memberId);
+    Integer countByMember_MemberIdAndStatus(String memberId, String status);
 
 }
