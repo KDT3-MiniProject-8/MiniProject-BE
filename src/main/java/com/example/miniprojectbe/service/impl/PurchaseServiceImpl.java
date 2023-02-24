@@ -10,8 +10,6 @@ import com.example.miniprojectbe.repository.MemberRepository;
 import com.example.miniprojectbe.repository.PurchaseRepository;
 import com.example.miniprojectbe.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,30 +61,28 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public HashMap<String, Object> getDepositPurchaseList(String header, int page) {
+    public HashMap<String, Object> getDepositPurchaseList(String header) {
         List<String> category = new ArrayList<>();
         category.add("정기예금");
         category.add("적금");
-        return getPurchaseList(header, category, page);
+        return getPurchaseList(header, category);
     }
 
     @Override
-    public HashMap<String, Object> getLoanPurchaseList(String header, int page) {
+    public HashMap<String, Object> getLoanPurchaseList(String header) {
         List<String> category = new ArrayList<>();
         category.add("전세자금대출");
         category.add("주택담보대출");
-        return getPurchaseList(header, category, page);
+        return getPurchaseList(header, category);
     }
 
-    private HashMap<String, Object> getPurchaseList(String header, List<String> category, int page) {
-
-        PageRequest pageRequest = PageRequest.of(page - 1, 10);
+    private HashMap<String, Object> getPurchaseList(String header, List<String> category) {
         HashMap<String, Object> result = new HashMap<>();
 
         try {
             String memberId = jwtProvider.getMemberIdByHeader(header);
-            Slice<PurchaseResponseDTO> purchaseResponseDTOS = purchaseRepository.findByMemberIdAndCategory(memberId, category, pageRequest)
-                    .map(PurchaseResponseDTO::new);
+            List<PurchaseResponseDTO> purchaseResponseDTOS = purchaseRepository.findByMemberIdAndCategory(memberId, category)
+                    .stream().map(PurchaseResponseDTO::new).collect(Collectors.toList());
 
             result.put("resultCode", "success");
             result.put("resultData", purchaseResponseDTOS);
