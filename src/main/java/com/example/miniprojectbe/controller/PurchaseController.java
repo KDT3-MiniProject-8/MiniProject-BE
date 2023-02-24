@@ -45,14 +45,14 @@ public class PurchaseController {
 
     // 구매(신청) 조회 (예적금)
     @GetMapping("/deposit/purchase_list")
-    public HashMap<String, Object> getDepositPurchaseList(@RequestHeader(name = "Authorization") String header, @RequestParam int page) {
-        return purchaseService.getDepositPurchaseList(header, page);
+    public HashMap<String, Object> getDepositPurchaseList(@RequestHeader(name = "Authorization") String header) {
+        return purchaseService.getDepositPurchaseList(header);
     }
 
     // 구매(신청) 조회 (대출)
     @GetMapping("/loan/purchase_list")
-    public HashMap<String, Object> getLoanPurchaseList(@RequestHeader(name = "Authorization") String header, @RequestParam int page) {
-        return purchaseService.getLoanPurchaseList(header, page);
+    public HashMap<String, Object> getLoanPurchaseList(@RequestHeader(name = "Authorization") String header) {
+        return purchaseService.getLoanPurchaseList(header);
     }
 
     // 상품 취소(삭제) (1개)
