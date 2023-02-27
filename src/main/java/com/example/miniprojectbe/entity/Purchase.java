@@ -40,6 +40,7 @@ public class Purchase {
     private String status;
 
     public void softDelete(){
+        this.purchase_date = LocalDateTime.now();
         this.status="신청취소";
     }
 
