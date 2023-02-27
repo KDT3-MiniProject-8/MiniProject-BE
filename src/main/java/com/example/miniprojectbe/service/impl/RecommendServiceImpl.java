@@ -27,7 +27,7 @@ public class RecommendServiceImpl implements RecommendService {
         HashMap<String, Object> result = new HashMap<>();
 
         try {
-            List<RecommendDepositResponseDTO> recommendDepositResponseDTOS = depositRepository.findTop3ByBankAndCategoryOrderByRateDesc(bank, category)
+            List<RecommendDepositResponseDTO> recommendDepositResponseDTOS = depositRepository.findTop3ByBankAndCategoryOrderByPrefRateDesc(bank, category)
                     .stream()
                     .map(RecommendDepositResponseDTO::new)
                     .collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class RecommendServiceImpl implements RecommendService {
 
         try {
             Slice<RecommendDepositResponseDTO> recommendDepositResponseDTOS
-                    = depositRepository.findByBankOrCategoryOrPreferenceOrTargetOrderByRateDesc(bank, category, preference, target, pageRequest)
+                    = depositRepository.findByBankOrCategoryOrPreferenceOrTargetOrderByPrefRateDesc(bank, category, preference, target, pageRequest)
                                         .map(RecommendDepositResponseDTO::new);
 
             result.put("resultCode", "success");
